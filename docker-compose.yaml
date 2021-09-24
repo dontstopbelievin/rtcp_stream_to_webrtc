@@ -1,0 +1,9 @@
+version: "3.7"
+services:
+  stream_socket_server:
+    build: "."
+    restart: "always"
+    ports:
+      - 3001:3001
+      - 9997:9997
+    command: "node index.js"
