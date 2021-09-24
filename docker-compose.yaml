@@ -6,4 +6,10 @@ services:
     ports:
       - 3001:3001
       - 9997:9997
+    networks:
+      - webrtc_local
     command: "node index.js"
+
+networks:
+  webrtc_local:
+    driver: bridge
