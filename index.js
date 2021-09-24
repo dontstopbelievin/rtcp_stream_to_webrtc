@@ -36,12 +36,12 @@ app.post('/start', function (req, res) {
         return
       })
     })
-    res.json({ url: `ws://127.0.0.1:${wsPort}` })
+    res.json({ url: `ws://praetorium.loc:${wsPort}` })
   } catch (e) {
     console.error(e)
   }
 })
 
 app.listen(port, () => {
-  console.log(`server listening commands at http://127.0.0.1:${port}`)
+  console.log(`server listening commands at http://praetorium.loc:${port}`)
 })
