@@ -38,7 +38,11 @@ app.post('/start', function (req, res) {
         })
       })
     }
-    res.json({ url: `ws://praetorium.loc:${wsPort}` })
+    if(stream !== null){
+      res.json({ url: `ws://praetorium.loc:${wsPort}` })
+    }else{
+      res.json({ error: 'service unavailable' })
+    }
   } catch (e) {
     console.error(e)
   }
