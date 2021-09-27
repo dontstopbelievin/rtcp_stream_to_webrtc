@@ -1,6 +1,41 @@
 const express = require('express')
 const cors = require('cors')
 const Stream = require('node-rtsp-stream')
+
+const https_port = 8086
+const wsPort = 9997
+
+delete Stream['pipeStreamToSocketServer'];
+Stream.pipeStreamToSocketServer = function(){
+  console.log("The functionality has been overridden.");
+  const server = https.createServer({
+    cert: fs.readFileSync('/usr/src/app/certs/praetorium.loc.crt'),
+    key: fs.readFileSync('/usr/src/app/certs/praetorium.loc.key'),
+  }).listen(wsPort, '0.0.0.0');
+  this.wsServer = new ws.Server({
+    server
+  })
+  this.wsServer.on("connection", (socket, request) => {
+    return this.onSocketConnect(socket, request)
+  })
+  this.wsServer.broadcast = function(data, opts) {
+    var results
+    results = []
+    for (let client of this.clients) {
+      if (client.readyState === 1) {
+        results.push(client.send(data, opts))
+      } else {
+        results.push(console.log("Error: Client from remoteAddress " + client.remoteAddress + " not connected."))
+      }
+    }
+    return results
+  }
+  return this.on('camdata', (data) => {
+    return this.wsServer.broadcast(data)
+  })
+}
+module.exports = Stream
+
 var https = require('https'); // require native node's native https module
 var fs = require('fs');
 
@@ -13,10 +48,6 @@ const app = express()
 
 app.use(cors())
 app.use(express.json())
-
-// const port = 3001
-const https_port = 8086
-const wsPort = 9997
 
 let stream = null
 
@@ -47,7 +78,7 @@ app.post('/start', function (req, res) {
       })
     }
     if(stream !== null){
-      res.json({ url: `ws://praetorium.loc:${wsPort}` })
+      res.json({ url: `wss://praetorium.loc:${wsPort}` })
     }else{
       res.json({ error: 'service unavailable' })
     }
