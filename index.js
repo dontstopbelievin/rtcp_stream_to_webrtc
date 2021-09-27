@@ -1,6 +1,8 @@
 const express = require('express')
 const cors = require('cors')
 const Stream = require('node-rtsp-stream')
+var https = require('https'); // require native node's native https module
+var fs = require('fs');
 
 const https_port = 8086
 const wsPort = 9997
@@ -35,9 +37,6 @@ Stream.pipeStreamToSocketServer = function(){
   })
 }
 module.exports = Stream
-
-var https = require('https'); // require native node's native https module
-var fs = require('fs');
 
 var privateKey  = fs.readFileSync('/usr/src/app/certs/praetorium.loc.key', 'utf8');
 var certificate = fs.readFileSync('/usr/src/app/certs/praetorium.loc.crt', 'utf8');
