@@ -13,29 +13,31 @@ const wsPort = 9997
 let stream = null
 
 app.post('/start', function (req, res) {
-  if (stream !== null) {
-    stream.stop()
-    stream = null
-  }
+  // if (stream !== null) {
+  //   stream.stop()
+  //   stream = null
+  // }
 
   console.log(req.body)
   const { streamUrl } = req.body
 
   try {
-    stream = new Stream({
-      name: 'videoStream',
-      streamUrl: streamUrl,
-      wsPort: wsPort,
-    })
-    stream.wsServer.on("connection", (socket, request) => {
-      return socket.on("close", (code, message) => {
-        if(stream.wsServer.clients.size == 0){
-          stream.stop()
-          stream = null
-        }
-        return
+    if(stream == null){
+      stream = new Stream({
+        name: 'videoStream',
+        streamUrl: streamUrl,
+        wsPort: wsPort,
       })
-    })
+      stream.wsServer.on("connection", (socket, request) => {
+        return socket.on("close", (code, message) => {
+          if(stream.wsServer.clients.size == 0){
+            stream.stop()
+            stream = null
+          }
+          return
+        })
+      })
+    }
     res.json({ url: `ws://praetorium.loc:${wsPort}` })
   } catch (e) {
     console.error(e)
