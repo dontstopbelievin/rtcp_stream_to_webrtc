@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require('cors')
-const Stream = require('node-rtsp-stream')
-// const Stream = require('./Custom_Stream')
+// const Stream = require('node-rtsp-stream')
+const Stream = require('./Custom_Stream')
 var https = require('https'); // require native node's native https module
 var fs = require('fs');
 ws = require('ws')
@@ -62,7 +62,3 @@ var httpsServer = https.createServer(credentials, app);
 httpsServer.listen(https_port, () => {
   console.log(`server listening commands at https://praetorium.loc:${https_port}`)
 });
-
-// app.listen(https_port, () => {
-//   console.log(`server listening commands at http://praetorium.loc:${port}`)
-// })
