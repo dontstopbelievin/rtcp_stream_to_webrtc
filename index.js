@@ -3,6 +3,7 @@ const cors = require('cors')
 const Stream = require('node-rtsp-stream')
 var https = require('https'); // require native node's native https module
 var fs = require('fs');
+ws = require('ws')
 
 const https_port = 8086
 const wsPort = 9997
