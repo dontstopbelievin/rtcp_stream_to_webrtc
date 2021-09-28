@@ -1,43 +1,13 @@
 const express = require('express')
 const cors = require('cors')
-const Stream = require('node-rtsp-stream')
+// const Stream = require('node-rtsp-stream')
+const Stream = require('./Custom_Stream')
 var https = require('https'); // require native node's native https module
 var fs = require('fs');
 ws = require('ws')
 
 const https_port = 8086
 const wsPort = 9997
-
-delete Stream.prototype['pipeStreamToSocketServer'];
-Stream.prototype.pipeStreamToSocketServer = function(){
-  console.log("The functionality has been overridden.");
-  const server = https.createServer({
-    cert: fs.readFileSync('/usr/src/app/certs/praetorium.loc.crt'),
-    key: fs.readFileSync('/usr/src/app/certs/praetorium.loc.key'),
-  }).listen(wsPort, '0.0.0.0');
-  this.wsServer = new ws.Server({
-    server
-  })
-  this.wsServer.on("connection", (socket, request) => {
-    return this.onSocketConnect(socket, request)
-  })
-  this.wsServer.broadcast = function(data, opts) {
-    var results
-    results = []
-    for (let client of this.clients) {
-      if (client.readyState === 1) {
-        results.push(client.send(data, opts))
-      } else {
-        results.push(console.log("Error: Client from remoteAddress " + client.remoteAddress + " not connected."))
-      }
-    }
-    return results
-  }
-  return this.on('camdata', (data) => {
-    return this.wsServer.broadcast(data)
-  })
-}
-module.exports = Stream
 
 var privateKey  = fs.readFileSync('/usr/src/app/certs/praetorium.loc.key', 'utf8');
 var certificate = fs.readFileSync('/usr/src/app/certs/praetorium.loc.crt', 'utf8');
