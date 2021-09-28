@@ -7,8 +7,8 @@ var fs = require('fs');
 const https_port = 8086
 const wsPort = 9997
 
-delete Stream['pipeStreamToSocketServer'];
-Stream.pipeStreamToSocketServer = function(){
+delete Stream.prototype['pipeStreamToSocketServer'];
+Stream.prototype.pipeStreamToSocketServer = function(){
   console.log("The functionality has been overridden.");
   const server = https.createServer({
     cert: fs.readFileSync('/usr/src/app/certs/praetorium.loc.crt'),
