@@ -93,10 +93,11 @@ VideoStream.prototype.startMpeg1Stream = function() {
 
 VideoStream.prototype.pipeStreamToSocketServer = function() {
     console.log("The functionality has been overridden.");
-    this.httpsserver = https.createServer({
+    const server = https.createServer({
         cert: fs.readFileSync('/usr/src/app/certs/praetorium.loc.crt'),
         key: fs.readFileSync('/usr/src/app/certs/praetorium.loc.key'),
-    }).listen(wsPort, '0.0.0.0');
+    }).listen(this.wsPort, '0.0.0.0');
+    this.httpsserver = server
     this.wsServer = new ws.Server({
         server
     })
