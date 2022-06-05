@@ -5,7 +5,8 @@ RUN apt-get install -y ffmpeg
 
 # Create app directory
 WORKDIR /usr/src/app
-RUN mkdir -p /usr/src/app/certs
+#RUN mkdir -p /usr/src/app/certs
+
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)

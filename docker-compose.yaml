@@ -7,5 +7,5 @@ services:
       - 4000:4000
       - 443:443
     command: "node index.js"
-    volumes:
-      - ../frontV2/data/certbot/conf/live/demo.quant-robotics.kz:/usr/src/app/certs
+    # volumes:
+    #   - ../frontV2/data/certbot/conf/live/demo.quant-robotics.kz:/usr/src/app/certs
