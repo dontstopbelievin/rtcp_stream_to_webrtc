@@ -6,7 +6,6 @@ services:
     ports:
       - 4000:4000
       - 443:443
-    network_mode: host
     command: "node index.js"
     volumes:
       - ../frontV2/data/certbot/conf/live/demo.quant-robotics.kz:/usr/src/app/certs
