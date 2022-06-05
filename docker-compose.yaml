@@ -5,7 +5,7 @@ services:
     restart: "always"
     ports:
       - 4000:4000
-      - 443:443
+      - 9997:9997
     command: "node index.js"
     # volumes:
     #   - ../frontV2/data/certbot/conf/live/demo.quant-robotics.kz:/usr/src/app/certs
