@@ -8,5 +8,5 @@ services:
       - 443:443
     network_mode: host
     command: "node index.js"
-  volumes:
+    volumes:
       - ../frontV2/data/certbot/conf/live/demo.quant-robotics.kz:/usr/src/app/certs
