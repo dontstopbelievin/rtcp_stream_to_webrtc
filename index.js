@@ -5,11 +5,11 @@ var https = require('https'); // require native node's native https module
 var fs = require('fs');
 ws = require('ws')
 
-const https_port = 8086
-const wsPort = 9997
+const https_port = 4000
+const wsPort = 443
 
-var privateKey  = fs.readFileSync('/usr/src/app/certs/praetorium.loc.key', 'utf8');
-var certificate = fs.readFileSync('/usr/src/app/certs/praetorium.loc.crt', 'utf8');
+var privateKey  = fs.readFileSync('/usr/src/app/certs/privkey.pem', 'utf8');
+var certificate = fs.readFileSync('/usr/src/app/certs/cert.pem', 'utf8');
 
 var credentials = {key: privateKey, cert: certificate};
 
@@ -47,7 +47,7 @@ app.post('/start', function (req, res) {
       })
     }
     if(stream !== null){
-      res.json({ url: `wss://praetorium.loc:${wsPort}` })
+      res.json({ url: `wss://demo.quant-robotics.kz:${wsPort}` })
     }else{
       res.json({ error: 'service unavailable' })
     }
@@ -59,5 +59,5 @@ app.post('/start', function (req, res) {
 var httpsServer = https.createServer(credentials, app);
 
 httpsServer.listen(https_port, () => {
-  console.log(`server listening commands at https://praetorium.loc:${https_port}`)
+  console.log(`server listening commands at https://demo.quant-robotics.kz:${https_port}`)
 });

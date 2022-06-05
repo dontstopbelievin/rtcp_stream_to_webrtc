@@ -18,6 +18,6 @@ RUN npm install
 # Bundle app source
 COPY . .
 
-EXPOSE 8086
-EXPOSE 9997
+EXPOSE 4000
+EXPOSE 443
 CMD [ "node", "index.js" ]
