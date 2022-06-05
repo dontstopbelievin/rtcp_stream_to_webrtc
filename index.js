@@ -6,7 +6,7 @@ var fs = require('fs');
 ws = require('ws')
 
 const https_port = 4000
-const wsPort = 9997
+const wsPort = 5500
 
 var privateKey  = fs.readFileSync('/usr/src/app/certs/privkey.pem', 'utf8');
 var certificate = fs.readFileSync('/usr/src/app/certs/cert.pem', 'utf8');
